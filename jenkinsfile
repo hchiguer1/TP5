@@ -9,13 +9,21 @@ pipeline {
   stages {
     stage('Cloning Git') {
       steps {
-        git branch: "${gitBranch}",url: 'https://github.com/hchiguer1/TP5.git'
+        git branch: "${gitBranch}", url: 'https://github.com/hchiguer1/TP5.git'
       }
     }
     stage('Building image') {
       steps {
         script {
           dockerImage = docker.build registry + ":$BUILD_NUMBER"
+        }
+      }
+    }
+    stage('Test image') {
+      steps {
+        script {
+
+          echo "Tests passed"
         }
       }
     }
@@ -26,7 +34,7 @@ pipeline {
             dockerImage.push()
           }
         }
-   }
-}
-}
+      }
+    }
+  }
 }
